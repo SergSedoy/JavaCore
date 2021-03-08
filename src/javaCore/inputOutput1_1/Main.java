@@ -7,98 +7,52 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         StringBuilder stringBuilder = new StringBuilder();
+        String srcPath = "D://Games/src/";
+        String recPath = "D://Games/rec/";
+        String tempPath = "D://Games/temp/";
+        String savegamesPath = "D://Games/savegames/";
 
-        File dir = new File("D://Games/src");
+        createDir(srcPath, stringBuilder);
+        createDir(recPath, stringBuilder);
+        createDir(tempPath, stringBuilder);
+        createDir(savegamesPath, stringBuilder);
+
+        createDir(srcPath + "main/", stringBuilder);
+        createDir(srcPath + "test/", stringBuilder);
+
+        createDir(recPath + "drawables/", stringBuilder);
+        createDir(recPath + "vectors/", stringBuilder);
+        createDir(recPath + "icons/", stringBuilder);
+
+        createFile(srcPath + "main/Main.java", stringBuilder);
+        createFile(srcPath + "main/Utils.java", stringBuilder);
+        createFile(tempPath + "temp.txt", stringBuilder);
+
+        try (FileOutputStream fos = new FileOutputStream(tempPath + "temp.txt", true)) {
+            fos.write(stringBuilder.toString().getBytes());
+        } catch (IOException e) {
+            stringBuilder.append(e.getMessage());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void createDir(String path, StringBuilder stringBuilder) {
+        File dir = new File(path);
         if (dir.mkdir())
             stringBuilder.append("каталог создан ")
                     .append(dir)
                     .append("\n");
+    }
 
-        File dir1 = new File("D://Games/rec");
-        if (dir1.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(dir1)
-                    .append("\n");
-
-        File dir2 = new File("D://Games/savegames");
-        if (dir2.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(dir2)
-                    .append("\n");
-
-        File dir3 = new File("D://Games/temp");
-        if (dir3.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(dir3)
-                    .append("\n");
-
-        File src = new File("D://Games/src/main");
-        if (src.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(src)
-                    .append("\n");
-
-        File test = new File("D://Games/src/test");
-        if (test.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(test)
-                    .append("\n");
-
-        File fileOne = new File("D://Games/src/main/Main.java");
+    public static void createFile(String path, StringBuilder stringBuilder) {
+        File file = new File(path);
         try {
-            if (fileOne.createNewFile())
+            if (file.createNewFile()) {
                 stringBuilder.append("файл создан ")
-                        .append(fileOne)
+                        .append(file)
                         .append("\n");
+            }
         } catch (IOException e) {
-            stringBuilder.append(e.getMessage());
-            System.out.println(e.getMessage());
-        }
-
-        File fileTwo = new File("D://Games/src/main/Utils.java");
-        try {
-            if (fileTwo.createNewFile())
-                stringBuilder.append("файл создан ")
-                        .append(fileTwo)
-                        .append("\n");
-        } catch (IOException e) {
-            stringBuilder.append(e.getMessage());
-            System.out.println(e.getMessage());
-        }
-
-        File dir4 = new File("D://Games/rec/drawables");
-        if (dir4.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(dir4)
-                    .append("\n");
-
-        File dir5 = new File("D://Games/rec/vectors");
-        if (dir5.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(dir5)
-                    .append("\n");
-
-        File dir6 = new File("D://Games/rec/icons");
-        if (dir6.mkdir())
-            stringBuilder.append("каталог создан ")
-                    .append(dir6)
-                    .append("\n");
-
-        File file3 = new File("D://Games/temp/temp.txt");
-        try {
-            if (file3.createNewFile())
-                stringBuilder.append("файл создан ")
-                        .append(file3)
-                        .append("\n");
-        } catch (IOException e) {
-            stringBuilder.append(e.getMessage());
-            System.out.println(e.getMessage());
-        }
-
-        try (FileOutputStream fos = new FileOutputStream("D://Games/temp/temp.txt", true)) {
-            fos.write(stringBuilder.toString().getBytes());
-        } catch (IOException e) {
-            stringBuilder.append(e.getMessage());
             System.out.println(e.getMessage());
         }
     }
