@@ -53,6 +53,7 @@ public class Main {
                         .append("\n");
             }
         } catch (IOException e) {
+            stringBuilder.append(e.getMessage());
             System.out.println(e.getMessage());
         }
     }
